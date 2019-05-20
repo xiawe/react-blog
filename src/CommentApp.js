@@ -7,7 +7,13 @@ class CommentApp extends Component {
     constructor () {
         super()
         this.state = {
-            info: []
+            info: [
+                // {
+                //     username: 'test',
+                //     comment: 'ttt',
+                //     createdTime: '1558338148109',
+                // }
+            ]
         }
     }
 
@@ -17,14 +23,21 @@ class CommentApp extends Component {
         }))
     }
 
+    onDelete = (id) => {
+        log('delete id', id)
+        this.setState((prevState) => {
+            return {info: prevState.info.filter((item, index) => index != id)}
+        })
+    }
+
     render() {
         return (
         <div className='wrapper'>
             <CommentInput onSubmit={this.onSubmit.bind(this)} />
-            {this.state.info.map((item, i) => 
-                <CommentList 
-                    username={item.username} 
-                    comment={item.comment} 
+            {this.state.info.map((item, i) =>
+                <CommentList
+                    commentData={item}
+                    handleDelete={this.onDelete.bind(this, i)}
                     key={i}
                 />
             )}
